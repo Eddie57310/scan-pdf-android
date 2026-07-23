@@ -27,9 +27,9 @@ class MainActivity : FlutterActivity() {
 
     /**
      * 主动确保 Google ML Kit 文档扫描模块就位，并把详细状态回传 Flutter 便于排错：
-     * - "available"                → 已就位，可用
-     * - "installing"               → 已发起紧急下载（带监听器 = 前台立即下，非延迟任务）
-     * - error(code, message)       → 拿不到，message 含具体异常，Flutter 会显示出来
+     * - "available"          → 已就位，可用
+     * - "installing"         → 已发起紧急下载（带监听器 = 前台立即下，非延迟任务）
+     * - error(code, message) → 拿不到，message 含具体异常，Flutter 会显示出来
      */
     private fun ensureScannerModule(result: MethodChannel.Result) {
         val options = GmsDocumentScannerOptions.Builder()
@@ -43,8 +43,6 @@ class MainActivity : FlutterActivity() {
                 if (response.areModulesAvailable()) {
                     result.success("available")
                 } else {
-                    // 加监听器 → 视为紧急请求，Play 服务会立即在前台下载并给进度，
-                    // 而不是排成「联网+充电+空闲时再下」的延迟任务。
                     val listener = InstallStatusListener { }.also { installListener = it }
                     val request = ModuleInstallRequest.newBuilder()
                         .addApi(scanner)

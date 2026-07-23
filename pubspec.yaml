@@ -42,7 +42,6 @@ dependencies:
   intl: ^0.20.3
   image: ^4.9.1
   shared_preferences: ^2.5.5
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
